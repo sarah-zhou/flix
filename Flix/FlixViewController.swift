@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFNetworking
 
 class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -67,9 +68,14 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let movie = movies![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
+        let poster = movie["poster_path"] as! String
+        
+        let baseURL = "http://image.tmdb.org/t/p/w500"
+        let imageURL = NSURL(string: baseURL + poster)
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
+        cell.posterView.setImageWithURL(imageURL!)
         
         print("row \(indexPath.row)")
         return cell
