@@ -1,6 +1,6 @@
-# Project 2 - *flix*
+# Project 2 - *Flix*
 
-**flix** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
+**Flix** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
 Time spent: **4** hours spent in total
 
@@ -19,7 +19,11 @@ The following **optional** features are implemented:
 - [ ] Movies are displayed using a CollectionView instead of a TableView.
 - [ ] User can search for a movie.
 - [ ] All images fade in as they are loading.
-- [ ] Customize the UI.
+- [ ] User can view the large movie poster by tapping on a cell.
+- [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
+- [ ] Customize the selection effect of the cell.
+- [ ] Customize the navigation bar.
+- [X] Customize the UI.
 
 The following **additional** features are implemented:
 
@@ -50,7 +54,7 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 
 ## License
 
-    Copyright 2016 Sarah Zhou
+    Copyright [2016] [Sarah Zhou]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
