@@ -35,6 +35,10 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent;
+    }
+    
     func loadDataFromNetwork() {
         
         let apiKey = "e05d5334e8b56449e07d815578f88efa"
@@ -66,6 +70,7 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
         })
     
         task.resume()
+
     }
     
     // Makes a network request to get updated data
@@ -113,27 +118,28 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let movie = movies![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
-        let poster = movie["poster_path"] as! String
-        
-        let baseURL = "http://image.tmdb.org/t/p/w500"
-        let imageURL = NSURL(string: baseURL + poster)
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        cell.posterView.setImageWithURL(imageURL!)
         
-        print("row \(indexPath.row)")
+        let baseURL = "http://image.tmdb.org/t/p/w500"
+        
+        if let poster = movie["poster_path"] as? String {
+            let posterURL = NSURL(string: baseURL + poster)
+            cell.posterView.setImageWithURL(posterURL!)
+        }
+        
         return cell
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPathForCell(cell)
+        let movie = movies![indexPath!.row]
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        detailViewController.movie = movie
+        
     }
-    */
-
+    
 }
