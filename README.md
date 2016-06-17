@@ -2,7 +2,7 @@
 
 **Flix** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **14** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
@@ -33,14 +33,14 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. If two VCs perform essentially the same function but with slight nuances, how can you more efficiently write code? As of now, my FlixViewController and CollectionViewController have large blocks of code directly copied from each other. 
+2. How do you link to an external source and deal with their internal code? As in, other companies do not use Swift, so how does our code in our app communicate / interact with that fact?
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/nvHxTPO.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -53,6 +53,7 @@ Describe any challenges encountered while building the app.
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- [MBProgressHUD]
 
 ## License
 
