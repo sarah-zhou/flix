@@ -18,7 +18,6 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func onTap(sender: AnyObject) {
         view.endEditing(true)
     }
-    
     var movies: [NSDictionary]?
     var filteredData: [NSDictionary]?
     
@@ -28,6 +27,8 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.dataSource = self
         tableView.delegate = self
         searchBar.delegate = self
+        
+        searchBar.placeholder = "Search for Movie                           "
         
         self.loadDataFromNetwork()
         
@@ -188,7 +189,7 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.reloadData()
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    /* func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = true
     }
     
@@ -196,7 +197,7 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
         searchBar.showsCancelButton = false
         searchBar.text = ""
         searchBar.resignFirstResponder()
-    }
+    } */
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetailViewController" {

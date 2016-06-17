@@ -16,6 +16,9 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    @IBAction func onTap(sender: AnyObject) {
+        view.endEditing(true)
+    }
     @IBAction func back(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -34,6 +37,8 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         flowLayout.minimumLineSpacing = 1
         flowLayout.minimumInteritemSpacing = 1
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 10)
+        
+        searchBar.placeholder = "Search for Movie                           "
         
         self.loadDataFromNetwork()
         
