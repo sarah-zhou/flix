@@ -62,7 +62,7 @@ class DetailViewController: UIViewController {
                     self.posterView.alpha = 0.0
                     self.posterView.image = smallImage;
                     
-                    UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
                         
                         self.posterView.alpha = 1.0
                         

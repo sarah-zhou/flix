@@ -21,15 +21,6 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" id="rxq-TE-5aK">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="gx9-yN-FF7" appends="YES" id="1ZW-Gt-PZX"/>
-                                </connections>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0UY-k7-0XF">
                                 <rect key="frame" x="12" y="25" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -38,7 +29,7 @@
                                     <segue destination="DJe-ls-Nf3" kind="push" identifier="showCollectionViewController" id="Guf-Vm-BAc"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="105" sectionHeaderHeight="28" sectionFooterHeight="28" id="fa7-jL-yhI">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="105" sectionHeaderHeight="28" sectionFooterHeight="28" id="fa7-jL-yhI">
                                 <rect key="frame" x="0.0" y="89" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -100,11 +91,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="gx9-yN-FF7">
-                    <connections>
-                        <action selector="onTap:" destination="BYZ-38-t0r" id="ocK-3D-ksb"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="664" y="103"/>
         </scene>
@@ -212,15 +198,6 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" id="LdE-JB-0x9">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="5rf-hL-xEv" appends="YES" id="ZrB-qV-bUm"/>
-                                </connections>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a0a-9u-aTM">
                                 <rect key="frame" x="12" y="26" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -229,7 +206,7 @@
                                     <action selector="back:" destination="DJe-ls-Nf3" eventType="touchUpInside" id="Neb-d7-0dw"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="VVo-X6-KTO">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" dataMode="prototypes" id="VVo-X6-KTO">
                                 <rect key="frame" x="0.0" y="89" width="320" height="481"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -279,11 +256,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bir-zp-YPB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="5rf-hL-xEv">
-                    <connections>
-                        <action selector="onTap:" destination="DJe-ls-Nf3" id="HYZ-4f-9n3"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="179" y="102"/>
         </scene>
@@ -318,6 +290,6 @@
         <image name="List" width="204" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wLb-Hg-rhj"/>
+        <segue reference="pg0-p1-JkV"/>
     </inferredMetricsTieBreakers>
 </document>
