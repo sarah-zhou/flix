@@ -125,21 +125,52 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let baseURL = "http://image.tmdb.org/t/p/w500"
         
         if let poster = movie["poster_path"] as? String {
-            let posterURL = NSURL(string: baseURL + poster)
-            cell.posterView.setImageWithURL(posterURL!)
+            let posterURL = baseURL + poster
+            
+            let imageRequest = NSURLRequest(URL: NSURL(string: posterURL)!)
+            cell.posterView.setImageWithURLRequest(
+                imageRequest,
+                placeholderImage: nil,
+                success: { (imageRequest, imageResponse, image) -> Void in
+                    
+                    // imageResponse will be nil if the image is cached
+                    if imageResponse != nil {
+                        cell.posterView.alpha = 0.0
+                        cell.posterView.image = image
+                        UIView.animateWithDuration(0.5, animations: { () -> Void in
+                            cell.posterView.alpha = 1.0
+                        })
+                    } else {
+                        cell.posterView.image = image
+                    }
+                },
+                failure: { (imageRequest, imageResponse, error) -> Void in
+                    // do something for the failure condition
+            })
+            
         }
         
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let cell = sender as! UITableViewCell
-        let indexPath = tableView.indexPathForCell(cell)
-        let movie = movies![indexPath!.row]
+        if segue.identifier == "showDetailViewController" {
+            let cell = sender as! UITableViewCell
+            let indexPath = tableView.indexPathForCell(cell)
+            let movie = movies![indexPath!.row]
         
-        let detailViewController = segue.destinationViewController as! DetailViewController
-        detailViewController.movie = movie
-        
+            let detailViewController = segue.destinationViewController as! DetailViewController
+            detailViewController.movie = movie
+            
+        } else if segue.identifier == "showCollectionViewController" {
+            let collectionViewController = segue.destinationViewController as! CollectionViewController
+            collectionViewController.movies = movies
+
+        }
     }
     
 }
