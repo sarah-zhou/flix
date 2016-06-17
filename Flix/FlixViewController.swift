@@ -39,7 +39,7 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent;
+        return UIStatusBarStyle.LightContent
     }
     
     func loadDataFromNetwork() {
@@ -66,17 +66,14 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     data, options:[]) as? NSDictionary {
                     self.movies = responseDictionary["results"] as? [NSDictionary]
                     
-                    for index in 0...(self.movies!.count - 1) {
-                        let movie = self.movies![index]
-                        self.filteredData?.append(movie)
-                    }
+                    self.filteredData = self.movies
                     
                     self.tableView.reloadData()
                 }
             }
             MBProgressHUD.hideHUDForView(self.view, animated: true)
         })
-    
+        
         task.resume()
     }
     
@@ -185,6 +182,7 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             })
         }
+        
         tableView.reloadData()
     }
     
