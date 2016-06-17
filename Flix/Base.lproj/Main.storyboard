@@ -84,6 +84,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="kl7-0l-Fab"/>
                     <connections>
+                        <outlet property="searchBar" destination="0mm-x3-prU" id="cvZ-tG-zkY"/>
                         <outlet property="tableView" destination="fa7-jL-yhI" id="lOJ-tS-4PI"/>
                     </connections>
                 </viewController>

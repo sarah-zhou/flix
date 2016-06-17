@@ -10,17 +10,20 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var movies: [NSDictionary]?
+    var filteredData: [NSDictionary]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.dataSource = self
         tableView.delegate = self
+        searchBar.delegate = self
         
         self.loadDataFromNetwork()
         
@@ -61,8 +64,13 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let data = dataOrNil {
                 if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                     data, options:[]) as? NSDictionary {
-                    print("response: \(responseDictionary)")
                     self.movies = responseDictionary["results"] as? [NSDictionary]
+                    
+                    for index in 0...(self.movies!.count - 1) {
+                        let movie = self.movies![index]
+                        self.filteredData?.append(movie)
+                    }
+                    
                     self.tableView.reloadData()
                 }
             }
@@ -70,43 +78,11 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
         })
     
         task.resume()
-
-    }
-    
-    // Makes a network request to get updated data
-    // Updates the tableView with the new data
-    // Hides the RefreshControl
-    func refreshControlAction(refreshControl: UIRefreshControl) {
-        
-        let apiKey = "e05d5334e8b56449e07d815578f88efa"
-        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
-        let request = NSURLRequest(
-            URL: url!,
-            cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData,
-            timeoutInterval: 10)
-        
-        // Configure session so that completion handler is executed on main UI thread
-        let session = NSURLSession(
-            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
-            delegate:nil,
-            delegateQueue:NSOperationQueue.mainQueue()
-        )
-        
-        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) in
-                                                                        
-            // Reload the tableView now that there is new data
-            self.tableView.reloadData()
-                                                                        
-            // Tell the refreshControl to stop spinning
-            refreshControl.endRefreshing()
-        });
-        
-        task.resume()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let movies = movies {
-            return movies.count
+        if let filteredData = filteredData {
+            return filteredData.count
         } else {
             return 0
         }
@@ -115,7 +91,7 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
         
-        let movie = movies![indexPath.row]
+        let movie = filteredData![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         
@@ -155,6 +131,71 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    // Makes a network request to get updated data
+    // Updates the tableView with the new data
+    // Hides the RefreshControl
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        
+        let apiKey = "e05d5334e8b56449e07d815578f88efa"
+        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let request = NSURLRequest(
+            URL: url!,
+            cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData,
+            timeoutInterval: 10)
+        
+        // Configure session so that completion handler is executed on main UI thread
+        let session = NSURLSession(
+            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+            delegate:nil,
+            delegateQueue:NSOperationQueue.mainQueue()
+        )
+        
+        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) in
+            
+            // Reload the tableView now that there is new data
+            self.tableView.reloadData()
+            
+            // Tell the refreshControl to stop spinning
+            refreshControl.endRefreshing()
+        });
+        
+        task.resume()
+    }
+    
+    // This method updates filteredData based on the text in the Search Box
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        // When there is no text, filteredData is the same as the original data
+        if searchText.isEmpty {
+            filteredData = movies
+        } else {
+            // The user has entered text into the search box
+            // Use the filter method to iterate over all items in the data array
+            // For each item, return true if the item should be included and false if the
+            // item should NOT be included
+            filteredData = movies!.filter({(movie: NSDictionary) -> Bool in
+                // If dataItem matches the searchText, return true to include it
+                let title = movie["title"] as! String
+                if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+        tableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

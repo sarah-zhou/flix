@@ -32,13 +32,14 @@ class DetailViewController: UIViewController {
         let title = movie["title"] as? String
         let date = movie["release_date"] as? String
         
-        let percent = movie["popularity"] as? Double
+        var percent = movie["vote_average"] as! Double
+        percent = percent * 10
         
         let overview = movie["overview"] as? String
         
         titleLabel.text = title
         dateLabel.text = date!
-        percentLabel.text = String(format: "%.0f", percent!) + "%"
+        percentLabel.text = String(format: "%.0f", percent) + "%"
         overviewLabel.text = overview
         overviewLabel.sizeToFit()
         
