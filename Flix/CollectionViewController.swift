@@ -13,6 +13,7 @@ import MBProgressHUD
 class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
     @IBAction func back(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
@@ -25,6 +26,11 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        flowLayout.scrollDirection = .Vertical
+        flowLayout.minimumLineSpacing = 1
+        flowLayout.minimumInteritemSpacing = 1
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 10)
         
         self.loadDataFromNetwork()
         
@@ -41,19 +47,6 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent;
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        let totalwidth = collectionView.bounds.size.width;
-        let numberOfCellsPerRow = 2
-        let oddEven = indexPath.row / numberOfCellsPerRow % 2
-        let dimensions = CGFloat(Int(totalwidth) / numberOfCellsPerRow)
-        if (oddEven == 0) {
-            return CGSizeMake(dimensions, dimensions)
-        } else {
-            return CGSizeMake(dimensions, dimensions / 2)
-        }
     }
     
     func loadDataFromNetwork() {
