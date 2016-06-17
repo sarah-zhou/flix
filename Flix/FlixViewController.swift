@@ -15,6 +15,10 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    @IBAction func onTap(sender: AnyObject) {
+        view.endEditing(true)
+    }
+    
     var movies: [NSDictionary]?
     var filteredData: [NSDictionary]?
     
@@ -65,9 +69,7 @@ class FlixViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                     data, options:[]) as? NSDictionary {
                     self.movies = responseDictionary["results"] as? [NSDictionary]
-                    
                     self.filteredData = self.movies
-                    
                     self.tableView.reloadData()
                 }
             }

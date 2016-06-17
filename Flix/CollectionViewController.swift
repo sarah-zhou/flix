@@ -10,22 +10,25 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     @IBAction func back(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
     var movies: [NSDictionary]?
+    var filteredData: [NSDictionary]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        searchBar.delegate = self
         
         flowLayout.scrollDirection = .Vertical
         flowLayout.minimumLineSpacing = 1
@@ -73,6 +76,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                     data, options:[]) as? NSDictionary {
                     print("response: \(responseDictionary)")
                     self.movies = responseDictionary["results"] as? [NSDictionary]
+                    self.filteredData = self.movies
                     self.collectionView.reloadData()
                 }
             }
@@ -81,6 +85,49 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         
         task.resume()
         
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let filteredData = filteredData {
+            return filteredData.count
+        } else {
+            return 0
+        }
+    }
+        
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PosterCell", forIndexPath: indexPath) as! PosterCell
+        
+        let movie = filteredData![indexPath.row]
+        let baseURL = "http://image.tmdb.org/t/p/w500"
+        
+        if let poster = movie["poster_path"] as? String {
+            let posterURL = baseURL + poster
+            
+            let imageRequest = NSURLRequest(URL: NSURL(string: posterURL)!)
+            cell.posterView.setImageWithURLRequest(
+                imageRequest,
+                placeholderImage: nil,
+                success: { (imageRequest, imageResponse, image) -> Void in
+                    
+                    // imageResponse will be nil if the image is cached
+                    if imageResponse != nil {
+                        cell.posterView.alpha = 0.0
+                        cell.posterView.image = image
+                        UIView.animateWithDuration(0.5, animations: { () -> Void in
+                            cell.posterView.alpha = 1.0
+                        })
+                    } else {
+                        cell.posterView.image = image
+                    }
+                },
+                failure: { (imageRequest, imageResponse, error) -> Void in
+                    // do something for the failure condition
+            })
+            
+        }
+        
+        return cell
     }
     
     // Makes a network request to get updated data
@@ -114,35 +161,51 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         task.resume()
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let movies = movies {
-            return movies.count
+    // This method updates filteredData based on the text in the Search Box
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        // When there is no text, filteredData is the same as the original data
+        if searchText.isEmpty {
+            filteredData = movies
         } else {
-            return 0
+            // The user has entered text into the search box
+            // Use the filter method to iterate over all items in the data array
+            // For each item, return true if the item should be included and false if the
+            // item should NOT be included
+            filteredData = movies!.filter({(movie: NSDictionary) -> Bool in
+                // If dataItem matches the searchText, return true to include it
+                let title = movie["title"] as! String
+                if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
+                    return true
+                } else {
+                    return false
+                }
+            })
         }
+        
+        collectionView.reloadData()
     }
-        
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PosterCell", forIndexPath: indexPath) as! PosterCell
-        
-        let movie = movies![indexPath.row]
-        let baseURL = "http://image.tmdb.org/t/p/w500"
-        if let poster = movie["poster_path"] as? String {
-            let posterURL = NSURL(string: baseURL + poster)
-            cell.posterView.setImageWithURL(posterURL!)
-        }
-        
-        return cell
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showDetailViewController" {
+            let cell = sender as! UICollectionViewCell
+            let indexPath = collectionView.indexPathForCell(cell)
+            let movie = movies![indexPath!.row]
+            
+            let detailViewController = segue.destinationViewController as! DetailViewController
+            detailViewController.movie = movie
+            
+        }
     }
-    */
 
 }
