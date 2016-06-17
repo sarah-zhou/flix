@@ -205,11 +205,10 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         if segue.identifier == "showDetailViewController" {
             let cell = sender as! UICollectionViewCell
             let indexPath = collectionView.indexPathForCell(cell)
-            let movie = movies![indexPath!.row]
+            let movie = filteredData![indexPath!.row]
             
             let detailViewController = segue.destinationViewController as! DetailViewController
             detailViewController.movie = movie
-            
         }
     }
 

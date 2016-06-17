@@ -30,12 +30,12 @@
                                     <outletCollection property="gestureRecognizers" destination="gx9-yN-FF7" appends="YES" id="1ZW-Gt-PZX"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="upH-Pc-pkQ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0UY-k7-0XF">
                                 <rect key="frame" x="12" y="25" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Collection"/>
+                                <state key="normal" title="Button" image="Collection"/>
                                 <connections>
-                                    <segue destination="DJe-ls-Nf3" kind="push" identifier="showCollectionViewController" id="9gU-Eo-HCH"/>
+                                    <segue destination="DJe-ls-Nf3" kind="push" identifier="showCollectionViewController" id="Guf-Vm-BAc"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="105" sectionHeaderHeight="28" sectionFooterHeight="28" id="fa7-jL-yhI">
