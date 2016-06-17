@@ -116,7 +116,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Wht-T8-9mc">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Wht-T8-9mc" userLabel="Poster View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -187,7 +187,7 @@
                         <outlet property="infoView" destination="D05-Oy-TVy" id="anT-UZ-2s6"/>
                         <outlet property="overviewLabel" destination="dBu-xG-rfS" id="lTP-Fg-x6y"/>
                         <outlet property="percentLabel" destination="oCz-Fe-vVM" id="hf7-Nu-kwl"/>
-                        <outlet property="posterImageView" destination="Wht-T8-9mc" id="V45-ci-8qK"/>
+                        <outlet property="posterView" destination="Wht-T8-9mc" id="7gB-Fb-OLT"/>
                         <outlet property="scrollView" destination="JfO-rb-lcJ" id="qOk-2t-gtx"/>
                         <outlet property="titleLabel" destination="h4m-1e-VCA" id="Hdo-Ht-dT7"/>
                     </connections>
