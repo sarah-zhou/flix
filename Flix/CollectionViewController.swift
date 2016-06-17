@@ -11,8 +11,12 @@ import AFNetworking
 import MBProgressHUD
 
 class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    
+
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBAction func back(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
     var movies: [NSDictionary]?
     
